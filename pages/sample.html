@@ -20,19 +20,18 @@
                 document.getElementById('codFiscale').innerHTML = label;
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
+                    async function userAction() {
                     var cf = document.getElementById('codFiscale'
                                 ).value.toUpperCase();
                     alert(cf);
-                    const userAction = async () => {
-                      const response = await fetch('http://api.miocodicefiscale.com/reverse', {
+                    const response = await fetch('http://api.miocodicefiscale.com/reverse', {
                         method: 'GET',
-                        codice-fiscale: cf, // string or object
+                        cf: cf, // string or object
                         access_token: JFCustomWidget.getWidgetSetting('apiKey'),
                         headers: {
                           'Content-Type': 'application/json'
-                        }
-                      });
-                      const myJson = await response.json(); //extract JSON from the http response
+                        }});
+                    const myJson = await response.json(); //extract JSON from the http response
                     var msg = {
                         //you should valid attribute to data for JotForm
                         //to be able to use youw widget as required
@@ -40,8 +39,9 @@
                         value: cf
                     };
                     alert(msg);
+                    return msg};
                     // send value to JotForm
-                    JFCustomWidget.sendSubmit(msg);
+                    userAction().then(JFCustomWidget.sendSubmit);
                 });
             });
         </script>
