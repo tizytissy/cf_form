@@ -16,13 +16,13 @@
             var cf = document.getElementById('userInput'
                         ).value.toUpperCase();
             alert(cf);
-            const response = await fetch('http://api.miocodicefiscale.com/ping', {
+            const ping = await fetch('http://api.miocodicefiscale.com/ping', {
                 method: 'GET',
                 access_token: apiKey,
                 headers: {
                   'Content-Type': 'application/json'
               }});
-            alert(response.status);
+            alert(ping.status);
             const response = await fetch('http://api.miocodicefiscale.com/reverse', {
                 method: 'GET',
                 cf: cf, // string or object
