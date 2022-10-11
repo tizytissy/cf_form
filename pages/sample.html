@@ -17,14 +17,12 @@
                         ).value.toUpperCase();
             alert(cf);
             const ping = await fetch('http://api.miocodicefiscale.com/ping', {
-                method: 'GET',
+                method: 'POST',
                 access_token: apiKey,
-                headers: {
-                  'Content-Type': 'application/json'
-                }});
+                });
             alert(cf + 'pippo');
             const response = await fetch('http://api.miocodicefiscale.com/reverse', {
-                method: 'GET',
+                method: 'POST',
                 cf: cf, // string or object
                 access_token: apiKey,
                 headers: {
