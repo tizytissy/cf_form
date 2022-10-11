@@ -9,11 +9,11 @@
             <div id=kind></div></h3>
             <span id="codFiscale"></span>
             <input type="text" style="text-transform: uppercase;" id="userInput">
-            <button onclick="userAction('909090').then(alert, alert)" />
+            <button onclick="userAction('909090').then(alert, alert)">Prova</button>
         </div>
         <script type="text/javascript">
             async function userAction(apiKey){
-            var cf = document.getElementById('codFiscale'
+            var cf = document.getElementById('userInput'
                         ).value.toUpperCase();
             alert(cf);
             const response = await fetch('http://api.miocodicefiscale.com/reverse', {
