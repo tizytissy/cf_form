@@ -17,8 +17,11 @@
                         ).value.toUpperCase();
             alert(cf);
             const response = await fetch('http://api.miocodicefiscale.com/ping', {
+                method: 'GET',
                 access_token: apiKey,
-                });
+                headers: {
+                  'Content-Type': 'application/json'
+                }});
             alert(response.status);
             const response = await fetch('http://api.miocodicefiscale.com/reverse', {
                 method: 'GET',
