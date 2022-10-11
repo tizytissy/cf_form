@@ -9,8 +9,29 @@
             <div id=kind></div></h3>
             <span id="codFiscale"></span>
             <input type="text" style="text-transform: uppercase;" id="userInput">
+            <button onclick="userAction('909090').then(alert, alert)" />
         </div>
         <script type="text/javascript">
+            async function userAction(apiKey){
+            var cf = document.getElementById('codFiscale'
+                        ).value.toUpperCase();
+            alert(cf);
+            const response = await fetch('http://api.miocodicefiscale.com/reverse', {
+                method: 'GET',
+                cf: cf, // string or object
+                access_token: apiKey,
+                headers: {
+                  'Content-Type': 'application/json'
+                }});
+            const myJson = await response.json(); //extract JSON from the http response
+            var msg = {
+                //you should valid attribute to data for JotForm
+                //to be able to use youw widget as required
+                valid: myJson.status,
+                value: cf
+            };
+            alert(msg);
+            return msg};
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
             JFCustomWidget.subscribe("ready", function(){
@@ -20,28 +41,9 @@
                 document.getElementById('codFiscale').innerHTML = label;
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
-                    async function userAction() {
-                    var cf = document.getElementById('codFiscale'
-                                ).value.toUpperCase();
-                    alert(cf);
-                    const response = await fetch('http://api.miocodicefiscale.com/reverse', {
-                        method: 'GET',
-                        cf: cf, // string or object
-                        access_token: JFCustomWidget.getWidgetSetting('apiKey'),
-                        headers: {
-                          'Content-Type': 'application/json'
-                        }});
-                    const myJson = await response.json(); //extract JSON from the http response
-                    var msg = {
-                        //you should valid attribute to data for JotForm
-                        //to be able to use youw widget as required
-                        valid: myJson.status,
-                        value: cf
-                    };
-                    alert(msg);
-                    return msg};
                     // send value to JotForm
-                    userAction().then(JFCustomWidget.sendSubmit, alert);
+                    userAction(JFCustomWidget.getWidgetSetting('apiKey')
+                        ).then(JFCustomWidget.sendSubmit, alert);
                 });
             });
         </script>
