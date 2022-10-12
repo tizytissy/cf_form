@@ -5,7 +5,7 @@
         <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>    </head>
     <body>
         <div id="main">
-            <h3>Inserire codice fiscale</h3>
+            <h3>Inserire Codice Fiscale</h3>
             <span id="labelText"></span>
             <input type="hidden" id="name">
             <input type="hidden" id="surname">
@@ -33,7 +33,7 @@
                 return msg
             };
             function populate(data) {
-                alert(data)
+                alert(Object.entries(data))
                 let [nome, cognome, cf=''] = data.split('|');
                 $("#name").val(nome);
                 $("#surname").val(cognome);
@@ -47,6 +47,7 @@
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
                     // send value to JotForm
+                    alert('submit in esecuzione');
                     submit(JFCustomWidget.getWidgetSetting('apiKey')
                         ).then(JFCustomWidget.sendResult, alert);
                 });
