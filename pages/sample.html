@@ -45,7 +45,11 @@
                 $('#labelText').innerHTML = label;
                 JFCustomWidget.subscribe("populate", populate);
                 //subscribe to form submit event
-                JFCustomWidget.subscribe("submit", submit);
+                JFCustomWidget.subscribe("submit", function(){
+                    // send value to JotForm
+                    submit(JFCustomWidget.getWidgetSetting('apiKey')
+                        ).then(JFCustomWidget.sendSubmit, alert);
+                });
             });
             function onClick() {
                 submit('0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813').then(alert)
