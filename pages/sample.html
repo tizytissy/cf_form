@@ -48,7 +48,7 @@
                 JFCustomWidget.subscribe("submit", function(){
                     // send value to JotForm
                     submit(JFCustomWidget.getWidgetSetting('apiKey')
-                        ).then(JFCustomWidget.sendSubmit, alert);
+                        ).then(JFCustomWidget.sendResult, alert);
                 });
             });
             function onClick() {
