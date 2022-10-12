@@ -33,7 +33,8 @@
                 return msg
             };
             function populate(data) {
-                alert(Object.entries(data))
+                alert(data.value);
+                //alert(Object.entries(data));
                 let [nome, cognome, cf=''] = data.split('|');
                 $("#name").val(nome);
                 $("#surname").val(cognome);
