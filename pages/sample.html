@@ -15,7 +15,6 @@
         </div>
         <script type="text/javascript">
             async function submit(apiKey) {
-            	var res = ''
                 var cf = $("#userInput").val().toUpperCase();
                 var msg = {
                     //you should valid attribute to data for JotForm
@@ -26,25 +25,23 @@
              	await $.get("https://api.miocodicefiscale.com/reverse",
                  {    cf : cf, access_token :apiKey},
                 function (response) {
-                    res += response.message;
                     $("#esito").text(response.message);
                     msg.valid = response.status});
-                    alert(msg.value + '; ' + msg.valid)
                 return msg
             };
-            function populate(data) {
+            /*function populate(data) {
                 alert(data.value);
                 //alert(Object.entries(data));
                 let [nome, cognome, cf=''] = data.split('|');
                 $("#name").val(nome);
                 $("#surname").val(cognome);
-            };
+            }; */
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
             JFCustomWidget.subscribe("ready", function(){
                 var label = JFCustomWidget.getWidgetSetting('QuestionLabel');
                 $('#labelText').innerHTML = label;
-                JFCustomWidget.subscribe("populate", populate);
+                // JFCustomWidget.subscribe("populate", populate);
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
                     // send value to JotForm
