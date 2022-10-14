@@ -5,13 +5,11 @@
         <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>    </head>
     <body>
         <div id="main">
-            //<input type="hidden" id="name">
-            //<input type="hidden" id="surname">
             <input type="text" id="userInput" style="text-transform: uppercase;">
             <div id="esito"></div>
         </div>
         <script type="text/javascript">
-            async function checkCF() {
+            async function checkCF(apiKey) {
                 var cf = $("#userInput").val().toUpperCase();
                 var msg = {
                     //you should valid attribute to data for JotForm
@@ -30,8 +28,8 @@
             //inside callback function , it is the best practice while developing widgets
             JFCustomWidget.subscribe("ready", function(){
                 //controllo il codice fiscale ad ogni tasto
-                const apiKey = JFCustomWidget.getWidgetSetting('apiKey')
-                $("#userInput").on("input", function () {checkCF().then(JFCustomWidget.sendSubmit)});
+                const apiKey = JFCustomWidget.getWidgetSetting('apiKey');
+                $("#userInput").on("input", function () {checkCF(apiKey).then(JFCustomWidget.sendSubmit)});
             });
         </script>
     </body>
