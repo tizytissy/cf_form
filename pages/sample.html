@@ -5,16 +5,13 @@
         <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>    </head>
     <body>
         <div id="main">
-            <h3>Inserire Codice Fiscale</h3>
-            <span id="labelText"></span>
-            <input type="hidden" id="name">
-            <input type="hidden" id="surname">
+            //<input type="hidden" id="name">
+            //<input type="hidden" id="surname">
             <input type="text" id="userInput" style="text-transform: uppercase;">
-            <button onclick="onClick()">controlla</button>
-            <div id="esito">esito</div>
+            <div id="esito"></div>
         </div>
         <script type="text/javascript">
-            async function checkCF(apiKey) {
+            async function checkCF() {
                 var cf = $("#userInput").val().toUpperCase();
                 var msg = {
                     //you should valid attribute to data for JotForm
@@ -31,20 +28,11 @@
             };
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
-            function onSubmit() {
-                    // send value to JotForm
-                    checkCF(JFCustomWidget.getWidgetSetting('apiKey')
-                        ).then(JFCustomWidget.sendSubmit, alert);
-            };
             JFCustomWidget.subscribe("ready", function(){
                 //controllo il codice fiscale ad ogni tasto
-                $("#userInput").on("input", onSubmit);
-                //subscribe to form submit event
-                JFCustomWidget.subscribe("submit", onSubmit);
+                const apiKey = JFCustomWidget.getWidgetSetting('apiKey')
+                $("#userInput").on("input", function () {checkCF().then(JFCustomWidget.sendSubmit)});
             });
-            function onClick() {
-                checkCF('0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813').then(alert)
-            };
         </script>
     </body>
 </html>
