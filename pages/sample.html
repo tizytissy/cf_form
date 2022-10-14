@@ -29,7 +29,12 @@
             JFCustomWidget.subscribe("ready", function(){
                 //controllo il codice fiscale ad ogni tasto
                 const apiKey = JFCustomWidget.getWidgetSetting('apiKey');
-                $("#userInput").on("input", function () {checkCF(apiKey).then(JFCustomWidget.sendSubmit)});
+                function onSubmit() {
+                    // send value to JotForm
+                    checkCF(apiKey).then(JFCustomWidget.sendSubmit, alert);
+                };
+                $("#userInput").on("input", onSubmit);
+                 JFCustomWidget.subscribe("submit", onSubmit);
             });
         </script>
     </body>
