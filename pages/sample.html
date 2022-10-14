@@ -32,6 +32,7 @@
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
             JFCustomWidget.subscribe("ready", function(){
+                alert('ready event triggered');
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
                     // send value to JotForm
@@ -46,7 +47,3 @@
         </script>
     </body>
 </html>
-Ho quindi verificato che la funzione fa esattamente quello che deve fare.
-
-A quel punto, ho inserito questa funzione, per agganciarlo alle API di JotForm:
-Cosa sto sbagliando?
