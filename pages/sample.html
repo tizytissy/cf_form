@@ -38,7 +38,7 @@
             };
             JFCustomWidget.subscribe("ready", function(){
                 //controllo il codice fiscale ad ogni tasto
-                $("#userInput").input(onSubmit);
+                $("#userInput").on("input", onSubmit);
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", onSubmit);
             });
