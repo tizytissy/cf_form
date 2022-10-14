@@ -31,15 +31,16 @@
             };
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
-            JFCustomWidget.subscribe("ready", function(){
-                alert('ready event triggered');
-                //subscribe to form submit event
-                JFCustomWidget.subscribe("submit", function(){
+            function onSubmit() {
                     // send value to JotForm
-                    alert('submit in esecuzione');
                     checkCF(JFCustomWidget.getWidgetSetting('apiKey')
-                        ).then(JFCustomWidget.sendResult, alert);
-                });
+                        ).then(JFCustomWidget.sendSubmit, alert);
+            };
+            JFCustomWidget.subscribe("ready", function(){
+                //controllo il codice fiscale ad ogni tasto
+                $("#userInput").keypress(onSubmit );
+                //subscribe to form submit event
+                JFCustomWidget.subscribe("submit", onSubmit);
             });
             function onClick() {
                 checkCF('0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813').then(alert)
