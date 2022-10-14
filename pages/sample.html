@@ -14,7 +14,7 @@
             <div id="esito">esito</div>
         </div>
         <script type="text/javascript">
-            async function submit(apiKey) {
+            async function checkCF(apiKey) {
                 var cf = $("#userInput").val().toUpperCase();
                 var msg = {
                     //you should valid attribute to data for JotForm
@@ -29,30 +29,24 @@
                     msg.valid = response.status});
                 return msg
             };
-            /*function populate(data) {
-                alert(data.value);
-                //alert(Object.entries(data));
-                let [nome, cognome, cf=''] = data.split('|');
-                $("#name").val(nome);
-                $("#surname").val(cognome);
-            }; */
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
             JFCustomWidget.subscribe("ready", function(){
-                //var label = JFCustomWidget.getWidgetSetting('QuestionLabel');
-                //$('#labelText').innerHTML = label;
-                // JFCustomWidget.subscribe("populate", populate);
                 //subscribe to form submit event
                 JFCustomWidget.subscribe("submit", function(){
                     // send value to JotForm
                     alert('submit in esecuzione');
-                    submit(JFCustomWidget.getWidgetSetting('apiKey')
+                    checkCF(JFCustomWidget.getWidgetSetting('apiKey')
                         ).then(JFCustomWidget.sendResult, alert);
                 });
             });
             function onClick() {
-                submit('0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813').then(alert)
+                checkCF('0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813').then(alert)
             };
         </script>
     </body>
 </html>
+Ho quindi verificato che la funzione fa esattamente quello che deve fare.
+
+A quel punto, ho inserito questa funzione, per agganciarlo alle API di JotForm:
+Cosa sto sbagliando?
