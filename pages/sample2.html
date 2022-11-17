@@ -13,15 +13,20 @@
         <script type="text/javascript">
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
+                if ((parms.cognome) && (parms.nome)) {
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
-                        if (response.status = "false") {
+                        if (response.status == "false") {
                             $("#esito").text(response.message);
-                            msg.valid = response.status}})};
+                            msg.valid = response.status}})
+                } else {
+                        $("#esito").text("Inserire nome e cognome");
+                        msg.valid = false
+                }};
             async function checkCF(apiKey) {
                 var cf = $("#codFisc").val().toUpperCase();
-                var nome = $("#userInput").val().toUpperCase();
-                var cognome = $("#userInput").val().toUpperCase();
+                var nome = $("#nome").val().toUpperCase();
+                var cognome = $("#cognome").val().toUpperCase();
                 var msg = {
                     //you should valid attribute to data for JotForm
                     //to be able to use youw widget as required
@@ -34,7 +39,7 @@
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
-                    if (msg.valid = "true") {Promise.resolve(checkCF2(msg,
+                    if (msg.valid == "true") {Promise.resolve(checkCF2(msg,
                         {cf : cf, lname: cognome, fname: nome, access_token :apiKey}))
                     }});
                 return msg
