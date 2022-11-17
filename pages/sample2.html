@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>    </head>
+    <body>
+        <div id="main">
+            <input type="text" id="nome" style="text-transform: capitalize;">
+            <input type="text" id="cognome" style="text-transform: capitalize;">
+            <input type="text" id="codFisc" style="text-transform: uppercase;">
+            <div id="esito"></div>
+        </div>
+        <script type="text/javascript">
+            async function checkCF2(msg, parms) {
+                // se il codice è valido, controllo che corrisponda a nome e cognome
+                await $.get("https://api.miocodicefiscale.com/compare", parms,
+                    function (response) {
+                        if (response.status = "false") {
+                            $("#esito").text(response.message);
+                            msg.valid = response.status}})};
+            async function checkCF(apiKey) {
+                var cf = $("#codFisc").val().toUpperCase();
+                var nome = $("#userInput").val().toUpperCase();
+                var cognome = $("#userInput").val().toUpperCase();
+                var msg = {
+                    //you should valid attribute to data for JotForm
+                    //to be able to use youw widget as required
+                    valid: false,
+                    value: cf.concat("|", nome, "|", cognome)
+                };
+                // per prima cosa, controllo la correttezza formale del codice fiscale
+             	await $.get("https://api.miocodicefiscale.com/reverse",
+                 {    cf : cf, access_token :apiKey},
+                function (response) {
+                    $("#esito").text(response.message);
+                    msg.valid = response.status;
+                    if (msg.valid = "true") {Promise.resolve(checkCF2(msg,
+                        {cf : cf, lname: cognome, fname: nome, access_token :apiKey}))
+                    }});
+                return msg
+            };
+            //always subscribe to ready event and implement widget related code
+            //inside callback function , it is the best practice while developing widgets
+            JFCustomWidget.subscribe("ready", function(){
+                //controllo il codice fiscale ad ogni tasto
+                const apiKey = JFCustomWidget.getWidgetSetting('apiKey');
+                function onSubmit() {
+                    // send value to JotForm
+                    checkCF(apiKey).then(JFCustomWidget.sendSubmit, alert);
+                };
+                $("#codFisc").on("input", onSubmit);
+                 JFCustomWidget.subscribe("submit", onSubmit);
+            });
+        </script>
+    </body>
+</html>
