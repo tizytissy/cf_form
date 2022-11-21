@@ -39,7 +39,7 @@
                     value: cf.concat("|", nome, "|", cognome)
                 };
                 // per prima cosa, controllo la correttezza formale del codice fiscale
-                alert("reverse:" + apiKey);
+                // alert("reverse:" + apiKey);
              	await $.get("https://api.miocodicefiscale.com/reverse",
                  {    cf : cf, access_token :apiKey},
                 function (response) {
@@ -51,7 +51,7 @@
                 return msg
             };
             function onSubmit() {
-                checkCF(apiKey).then(alert, alert);
+                Promise.resolve(checkCF(apiKey));
             };
             $("#codFisc").on("input", onSubmit);
         </script>
