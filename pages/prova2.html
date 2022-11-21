@@ -45,7 +45,7 @@
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
-                    alert("msg.valid:" + msg.valid + ";" + msg.valid == "true");
+                    alert("msg.valid:" + msg.valid + ";" + (msg.valid == "true"));
                     if (msg.valid == "true") {Promise.resolve(checkCF2(msg,
                         {cf : cf, lname: cognome, fname: nome, access_token :apiKey}))
                     }});
