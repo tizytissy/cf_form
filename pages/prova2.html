@@ -17,7 +17,7 @@
             const apiKey = '0895b8b736b67a3306e95faed8f4802881f334d953f7a1a2eae0449994decd1813';
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
-                if ((parms.cognome) && (parms.nome)) {
+                if ((parms.lname) && (parms.fname)) {
                 alert("compare:" + apiKey);
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
@@ -45,6 +45,7 @@
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
+                    alert("msg.valid:" + msg.valid + ";" + msg.valid == "true");
                     if (msg.valid == "true") {Promise.resolve(checkCF2(msg,
                         {cf : cf, lname: cognome, fname: nome, access_token :apiKey}))
                     }});
@@ -53,6 +54,13 @@
             function onSubmit() {
                 Promise.resolve(checkCF(apiKey));
             };
+            function onInputNominativo() {
+                if ($("#codFisc").val()) {
+                    Promise.resolve(checkCF(apiKey));
+                };
+            };
+            $("#nome").on("input", onInputNominativo);
+            $("#cognome").on("input", onInputNominativo);
             $("#codFisc").on("input", onSubmit);
         </script>
     </body>
