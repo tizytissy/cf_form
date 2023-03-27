@@ -59,7 +59,15 @@
                     // send value to JotForm
                     checkCF(apiKey).then(JFCustomWidget.sendSubmit, alert);
                 };
-                $("#codFisc").on("input", onSubmit);
+				function onInputNominativo() {
+					if ($("#codFisc").val()) {
+						Promise.resolve(checkCF(apiKey));
+					};
+				};
+				$("#nome").on("input", onInputNominativo);
+				$("#cognome").on("input", onInputNominativo);
+				$("#codFisc").on("input", onSubmit);
+				$("#esito").text("Inserisci i dati richiesti");
                  JFCustomWidget.subscribe("submit", onSubmit);
             });
         </script>
