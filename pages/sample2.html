@@ -49,10 +49,7 @@
                     }});
                 return msg
             };
-            $("#codFisc").on("input", onSubmit);
-            //always subscribe to ready event and implement widget related code
-            //inside callback function , it is the best practice while developing widgets
-            JFCustomWidget.subscribe("ready", function(){
+            async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
                 const apiKey = JFCustomWidget.getWidgetSetting('apiKey');
                 function onSubmit() {
@@ -69,7 +66,10 @@
 				$("#codFisc").on("input", onSubmit);
 				$("#esito").text("Inserisci i dati richiesti");
                  JFCustomWidget.subscribe("submit", onSubmit);
-            });
+            };
+            //always subscribe to ready event and implement widget related code
+            //inside callback function , it is the best practice while developing widgets
+            JFCustomWidget.subscribe("ready", atStartup);
         </script>
     </body>
 </html>
