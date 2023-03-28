@@ -46,14 +46,17 @@
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
+					alert("check0:" + msg.valid);
                     if (msg.valid) {Promise.resolve(checkCF2(msg,
                         {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey}));
                         // se richiesto, verifico che il cf sia quello di un maggiorenne
+						alert("check1:" + msg.valid);
                         if (msg.valid) {
 							var limit18 = parametri.adesso.minus({years: 18});
                             var data = response.data;
                             var dataNasc = luxon.DateTime.fromISO(
                                 "20" + data.year + data.month + data.day);
+							alert("check2:" + dataNasc.setLocale('it').toFormat('dd MMMM yyyy'));
                             if (dataNasc > parametri.adesso) {
                                 var dataNasc = dataNasc.minus({years: 100})};
                             if ((dataNasc > limit18) && (parametri.checkMaggiorenne == "Yes")) {
@@ -81,7 +84,7 @@
 				$("#nome").on("input", onInputNominativo);
 				$("#cognome").on("input", onInputNominativo);
 				$("#codFisc").on("input", onSubmit);
-				$("#esito").text("Inserisci i dati richiesti; " + parametri.checkMaggiorenne + ":");
+				$("#esito").text("Inserisci i dati richiesti.");
                  JFCustomWidget.subscribe("submit", onSubmit);
             };
             //always subscribe to ready event and implement widget related code
