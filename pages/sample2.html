@@ -21,7 +21,7 @@
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
                 if ((parms.lname) && (parms.fname)) {
-                alert("compare:" + parametri + ";" + parms);
+                alert("compare:" + parms.lname + "|---|" + parms.fname + "|");
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
                         if (response.status == "false") {
