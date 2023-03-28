@@ -77,8 +77,8 @@
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var ageReq = (JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes" ? 18: 0);
-				parametri[deadLine] = parametri.adesso.minus({years: ageReq});
-				alert("atStartup:" +parametri[deadLine] + "|" + parametri.deadLine);
+				parametri['deadLine'] = parametri.adesso.minus({years: ageReq});
+				alert("atStartup:" +parametri['deadLine'] + "|" + parametri.deadLine);
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
