@@ -26,7 +26,7 @@
                     function (response) {
                         if (response.status == "false") {
                             $("#esito").text(response.message);
-                            msg.valid = response.status}})
+                            msg.valid = false}})
                 } else {
                         $("#esito").text("Inserire nome e/o cognome");
                         msg.valid = false
@@ -51,9 +51,10 @@
                         {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey}));
                         // se richiesto, verifico che il cf sia quello di un maggiorenne
                         if (msg.valid) {
-							alert("reverse:" + parametri.apiKey);
 							var limit18 = parametri.adesso.minus({years: 18});
                             var data = response.data;
+							alert("reverse:" + parametri.apiKey);
+							if data.lname 
                             var dataNasc = luxon.DateTime.fromISO(
                                 "20" + data.year + data.month + data.day);
                             if (dataNasc > parametri.adesso) {
@@ -71,7 +72,7 @@
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');;
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
-				alert("atStartup0|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
+				//alert("atStartup0|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
