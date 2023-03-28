@@ -71,17 +71,15 @@
 				var env = {msg: msg, parms: parms};
                 // per prima cosa, controllo la correttezza formale del codice fiscale
                 await $.get("https://api.miocodicefiscale.com/reverse",
-                      {    cf : cf, access_token :parametri.apiKey},
-                function (respReverse) {
-					env['reverseData'] =respReverse.data;
-					env['esito'] = respReverse.message;
-                    // $("#esito").text(respReverse.message);
-                    env.msg.valid = respReverse.status;
-					alert("check0:" + msg.valid);
-                    /* if (msg.valid) {Promise.resolve(checkCF2(msg, respReverse.data,
-                        {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey})
-						).then(null, null);
-                    }}); */
+							{cf: parms.cf, access_token: parametri.apiKey},
+					function (respReverse) {
+						env['reverseData'] =respReverse.data;
+						env['esito'] = respReverse.message;
+						// $("#esito").text(respReverse.message);
+						env.msg.valid = respReverse.status;
+						alert("check0:" + msg.valid);
+					}
+				);
                 return env
             };
             async function atStartup() {
