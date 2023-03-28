@@ -17,7 +17,7 @@
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
                 if ((parms.cognome) && (parms.nome)) {
-                alert("compare:" + apiKey);
+                alert("compare:" + window.apiKey);
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
                         if (response.status == "false") {
@@ -27,7 +27,7 @@
                         $("#esito").text("Inserire nome e cognome");
                         msg.valid = false
                 }};
-            async function checkCF(apiKey) {
+            async function checkCF() {
                 var cf = $("#codFisc").val().toUpperCase();
                 var nome = $("#nome").val().toUpperCase();
                 var cognome = $("#cognome").val().toUpperCase();
@@ -38,33 +38,45 @@
                     value: cf.concat("|", nome, "|", cognome)
                 };
                 // per prima cosa, controllo la correttezza formale del codice fiscale
-                alert("reverse:" + apiKey);
+                alert("reverse:" + window.apiKey);
                 await $.get("https://api.miocodicefiscale.com/reverse",
-                      {    cf : cf, access_token :apiKey},
+                      {    cf : cf, access_token :window.apiKey},
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
                     if (msg.valid == "true") {Promise.resolve(checkCF2(msg,
-                        {cf : cf, lname: cognome, fname: nome, access_token :apiKey}))
+                        {cf : cf, lname: cognome, fname: nome, access_token :window.apiKey}));
+                        // se richiesto, verifico che il cf sia quello di un maggiorenne
+                        if (msg.valid && window.checkMaggiorenne) {
+                            $("#limit18").text(limit18.toLocaleString(luxon.DateTime.DATETIME_FULL));
+                            var data = response.data;
+                            var dataNasc = luxon.DateTime.fromISO(
+                                "19" + data.year + data.month + data.day);
+                            if (dataNasc < limit100) {
+                                var dataNasc = dataNasc.plus(secolo)};
+                            if (dataNasc > limit18) {
+                                setErrore("È richiesto il codice fiscale di un maggiorenne")
+                            }
                     }});
                 return msg
             };
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
-                const apiKey = JFCustomWidget.getWidgetSetting('apiKey');
+                window.apiKey = JFCustomWidget.getWidgetSetting('apiKey');
+                window.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
                 function onSubmit() {
                     // send value to JotForm
-                    checkCF(apiKey).then(JFCustomWidget.sendSubmit, alert);
+                    checkCF().then(JFCustomWidget.sendSubmit, alert);
                 };
 				function onInputNominativo() {
 					if ($("#codFisc").val()) {
-						Promise.resolve(checkCF(apiKey));
+						Promise.resolve(checkCF());
 					};
 				};
 				$("#nome").on("input", onInputNominativo);
 				$("#cognome").on("input", onInputNominativo);
 				$("#codFisc").on("input", onSubmit);
-				$("#esito").text("Inserisci i dati richiesti");
+				$("#esito").text("Inserisci i dati richiesti; " + window.checkMaggiorenne);
                  JFCustomWidget.subscribe("submit", onSubmit);
             };
             //always subscribe to ready event and implement widget related code
