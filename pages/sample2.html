@@ -23,6 +23,7 @@
                 if ((parms.lname) && (parms.fname)) {
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
+						alert("response0:" + response.status + response.message);
                         if (!response.status) {
                             $("#esito").text(response.message);
                             msg.valid = false}})
