@@ -58,7 +58,7 @@
                                 "20" + data.year + data.month + data.day);
                             if (dataNasc > parametri.adesso) {
                                 var dataNasc = dataNasc.minus({years: 100})};
-                            if ((dataNasc > limit18) && parametri.checkMaggiorenne) {
+                            if ((dataNasc > limit18) && (parametri.checkMaggiorenne == "Yes")) {
                                 $("#esito").text("È richiesto il codice fiscale di un maggiorenne")
                             } else {
 								$("#esito").text("Nato il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
