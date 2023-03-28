@@ -52,7 +52,6 @@
                         {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey}));
                         // se richiesto, verifico che il cf sia quello di un maggiorenne
                         if (msg.valid) {
-							
 							alert("reverse:" + parametri.apiKey);
 							var limit18 = parametri.adesso.minus({years: 18});
                             var data = response.data;
@@ -61,12 +60,12 @@
                             if (dataNasc > parametri.adesso) {
                                 var dataNasc = dataNasc.minus({years: 100})};
                             if ((dataNasc > limit18) && parametri.checkMaggiorenne) {
-                                $("#esito").text(("È richiesto il codice fiscale di un maggiorenne")
+                                $("#esito").text("È richiesto il codice fiscale di un maggiorenne")
                             } else {
-								$("#esito").text(("Nato il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
+								$("#esito").text("Nato il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
 								+ "a" + data.city)
 							};
-                    }});
+                    }}});
                 return msg
             };
             async function atStartup() {
