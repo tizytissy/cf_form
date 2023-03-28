@@ -33,7 +33,7 @@
 									var dataNasc = dataNasc.minus({years: 100})};
 								// se richiesto, verifico che il cf sia quello di un maggiorenne
 								alert("check1:" + msg.valid);
-								if (dataNasc < parametri[deadLine]) {
+								if (dataNasc < parametri.deadLine) {
 									$("#esito").text("È richiesto il codice fiscale di un maggiorenne.");
 									msg.valid = false;
 								} else {
@@ -78,7 +78,7 @@
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var ageReq = (JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes" ? 18: 0);
 				parametri['deadLine'] = parametri.adesso.minus({years: ageReq});
-				alert("atStartup:" +parametri['deadLine'] + "|" + parametri.deadLine);
+				alert("atStartup:" + parametri.deadLine);
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
