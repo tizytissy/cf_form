@@ -21,10 +21,8 @@
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
                 if ((parms.lname) && (parms.fname)) {
-                alert("compare:" + parms.lname + "|---|" + parms.fname + "|");
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
-						alert("compare:" + response.status + "|---|" + !response.status + "|--|" + response.message);
                         if (!response.status) {
                             $("#esito").text(response.message);
                             msg.valid = false}})
@@ -54,13 +52,12 @@
                         if (msg.valid) {
 							var limit18 = parametri.adesso.minus({years: 18});
                             var data = response.data;
-							alert("reverse:" + parametri.apiKey);
                             var dataNasc = luxon.DateTime.fromISO(
                                 "20" + data.year + data.month + data.day);
                             if (dataNasc > parametri.adesso) {
                                 var dataNasc = dataNasc.minus({years: 100})};
                             if ((dataNasc > limit18) && (parametri.checkMaggiorenne == "Yes")) {
-                                $("#esito").text("È richiesto il codice fiscale di un maggiorenne")
+                                $("#esito").text("È richiesto il codice fiscale di un maggiorenne.")
                             } else {
 								$("#esito").text("Nat" +(text.substr(9, 1) > "3"  ? "a":  "o") + " il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
 								+ (cf.substr(11, 1) === "Z" ? " in ": " a ") + data.city)
@@ -72,7 +69,6 @@
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');;
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
-				//alert("atStartup0|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
