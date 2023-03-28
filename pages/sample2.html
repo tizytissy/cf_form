@@ -70,9 +70,10 @@
             };
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
+				alert("atStartup0:" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('apiKey');
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
-				alert("atStartup:" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
+				alert("atStartup1:" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
