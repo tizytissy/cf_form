@@ -71,7 +71,7 @@
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
 				alert("atStartup4:" + parametri.adesso + ":" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
-				var apiKey = JFCustomWidget.getWidgetSetting('apiKey');
+				var apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
                 parametri.apiKey = apiKey;
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
 				alert("atStartup4a:" + parametri.adesso + ":" + parametri.apiKey + ":" + apiKey + ":" + parametri[apiKey] + ":");
