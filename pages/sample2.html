@@ -61,8 +61,8 @@
                             if ((dataNasc > limit18) && (parametri.checkMaggiorenne == "Yes")) {
                                 $("#esito").text("È richiesto il codice fiscale di un maggiorenne")
                             } else {
-								$("#esito").text("Nato il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
-								+ "a" + data.city)
+								$("#esito").text("Nat" +(text.substr(9, 1) > "3"  ? "a":  "o") + " il " + dataNasc.setLocale('it').toFormat('dd MMMM yyyy')
+								+ (cf.substr(11, 1) === "Z" ? " in ": " a ") + data.city)
 							};
                     }}});
                 return msg
