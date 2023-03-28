@@ -33,7 +33,7 @@
 									var dataNasc = dataNasc.minus({years: 100})};
 								// se richiesto, verifico che il cf sia quello di un maggiorenne
 								alert("check1:" + msg.valid);
-								if (dataNasc < parametri.deadLine) {
+								if (dataNasc > parametri.deadLine) {
 									$("#esito").text("È richiesto il codice fiscale di un maggiorenne.");
 									msg.valid = false;
 								} else {
@@ -69,7 +69,8 @@
                     msg.valid = respReverse.status;
 					alert("check0:" + msg.valid);
                     if (msg.valid) {Promise.resolve(checkCF2(msg, respReverse.data,
-                        {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey}));
+                        {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey})
+						).then(null, null);
                     }});
                 return msg
             };
@@ -85,7 +86,7 @@
                 };
 				function onInputNominativo() {
 					if ($("#codFisc").val()) {
-						Promise.resolve(checkCF());
+						checkCF().then(null, alert);
 					};
 				};
 				$("#nome").on("input", onInputNominativo);
