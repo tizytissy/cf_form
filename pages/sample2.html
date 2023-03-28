@@ -20,7 +20,7 @@
 			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing', checkMaggiorenne: '?'};
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
-                if ((parms.cognome) && (parms.nome)) {
+                if ((parms.lname) && (parms.fname)) {
                 alert("compare:" + parametri + ";" + parms);
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
@@ -28,7 +28,7 @@
                             $("#esito").text(response.message);
                             msg.valid = response.status}})
                 } else {
-                        $("#esito").text("Inserire nome e cognome");
+                        $("#esito").text("Inserire nome e/o cognome");
                         msg.valid = false
                 }};
             async function checkCF() {
@@ -69,10 +69,9 @@
             };
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
-				alert("atStartup4:" + parametri.adesso + ":" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');;
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
-				alert("atStartup4a|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
+				alert("atStartup0|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
