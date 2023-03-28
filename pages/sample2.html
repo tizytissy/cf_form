@@ -42,13 +42,12 @@
                     value: cf.concat("|", nome, "|", cognome)
                 };
                 // per prima cosa, controllo la correttezza formale del codice fiscale
-                alert("reverse:" + parametri);
                 await $.get("https://api.miocodicefiscale.com/reverse",
                       {    cf : cf, access_token :parametri.apiKey},
                 function (response) {
                     $("#esito").text(response.message);
                     msg.valid = response.status;
-                    if (msg.valid == "true") {Promise.resolve(checkCF2(msg,
+                    if (msg.valid) {Promise.resolve(checkCF2(msg,
                         {cf : cf, lname: cognome, fname: nome, access_token :parametri.apiKey}));
                         // se richiesto, verifico che il cf sia quello di un maggiorenne
                         if (msg.valid) {
@@ -71,12 +70,9 @@
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
 				alert("atStartup4:" + parametri.adesso + ":" + parametri.apiKey + ":" + parametri.checkMaggiorenne + ":");
-				var apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
-                parametri.apiKey = apiKey;
+                parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');;
                 parametri.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
-				alert("atStartup4a:" + parametri.adesso + ":" + parametri.apiKey + ":" + apiKey + ":" + parametri[apiKey] + ":");
-                parametri[apiKey] = apiKey;
-				alert("atStartup4b:" + parametri.adesso + ":" + parametri.apiKey + ":" + apiKey + ":" + parametri[apiKey] + ":");
+				alert("atStartup4a|" + parametri.adesso + "|----|" + parametri.apiKey + "|----|" + parametri.checkMaggiorenne + "|");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
