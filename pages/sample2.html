@@ -40,7 +40,7 @@
 									if (dataNasc > parametri.deadLineMax) {
 										env.esito = "È richiesto il codice fiscale di un maggiorenne.";
 										msg.valid = false;
-									else if (dataNasc < parametri.deadLineMin) {
+									} else if (dataNasc < parametri.deadLineMin) {
 										env.esito = "È richiesto il codice fiscale di un minorenne.";
 										msg.valid = false;
 									} else {
