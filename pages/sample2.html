@@ -61,7 +61,8 @@
             async function checkCF() {
 				var parms = {cf: $("#codFisc").val().toUpperCase(),
 							fname: $("#nome").val().toUpperCase(),
-							lname: $("#cognome").val().toUpperCase()};
+							lname: $("#cognome").val().toUpperCase(),
+							access_token: parametri.apiKey};
                 var msg = {
                     //you should valid attribute to data for JotForm
                     //to be able to use youw widget as required
@@ -71,7 +72,7 @@
 				var env = {msg: msg, parms: parms};
                 // per prima cosa, controllo la correttezza formale del codice fiscale
                 await $.get("https://api.miocodicefiscale.com/reverse",
-							{cf: parms.cf, access_token: parametri.apiKey},
+							{cf: parms.cf, access_token: parms.access_token},
 					function (respReverse) {
 						env['reverseData'] =respReverse.data;
 						env['esito'] = respReverse.message;
