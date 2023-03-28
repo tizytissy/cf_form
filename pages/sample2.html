@@ -32,13 +32,16 @@
 									// Il codice è corretto; estraggo data e luogo di nascita
 									var dataNasc = luxon.DateTime.fromISO(
 										"20" + reverseData.year + reverseData.month + reverseData.day);
-									alert("check2:" + dataNasc.setLocale('it').toFormat('dd MMMM yyyy'));
+									//alert("check2:" + dataNasc.setLocale('it').toFormat('dd MMMM yyyy'));
 									if (dataNasc > parametri.adesso) {
 										var dataNasc = dataNasc.minus({years: 100})};
 									// se richiesto, verifico che il cf sia quello di un maggiorenne
-									//alert("check1:" + msg.valid);
-									if (dataNasc > parametri.deadLine) {
+									//alert("check1:" + msg.valid);	
+									if (dataNasc > parametri.deadLineMax) {
 										env.esito = "È richiesto il codice fiscale di un maggiorenne.";
+										msg.valid = false;
+									else if (dataNasc < parametri.deadLineMin) {
+										env.esito = "È richiesto il codice fiscale di un minorenne.";
 										msg.valid = false;
 									} else {
 										env.esito = "Nat" +(parms.cf.substr(9, 1) > "3"  ? "a":  "o") + 
@@ -87,8 +90,9 @@
             async function atStartup() {
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
-				var ageReq = (JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes" ? 18: 0);
-				parametri['deadLine'] = parametri.adesso.minus({years: ageReq});
+				var maxRequired = JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes";
+				parametri['deadLineMax'] = parametri.adesso.minus({years: (maxRequired ? 18: 0)});
+				parametri['deadLineMin'] = parametri.adesso.minus({years: (maxRequired ? 99: 18)});
 				//alert("atStartup:" + parametri.deadLine);
                 function onSubmit() {
                     // send value to JotForm
