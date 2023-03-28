@@ -55,7 +55,7 @@
                             if (dataNasc < limit100) {
                                 var dataNasc = dataNasc.plus(secolo)};
                             if (dataNasc > limit18) {
-                                setErrore("È richiesto il codice fiscale di un maggiorenne")
+                                $("#esito").text(("È richiesto il codice fiscale di un maggiorenne")
                             }
                     }});
                 return msg
@@ -64,6 +64,7 @@
                 //controllo il codice fiscale ad ogni tasto
                 window.apiKey = JFCustomWidget.getWidgetSetting('apiKey');
                 window.checkMaggiorenne = JFCustomWidget.getWidgetSetting('checkMaggiorenne');
+				alert("atStartup:" + window.apiKey + ":" + window.checkMaggiorenne + ":");
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(JFCustomWidget.sendSubmit, alert);
@@ -76,7 +77,7 @@
 				$("#nome").on("input", onInputNominativo);
 				$("#cognome").on("input", onInputNominativo);
 				$("#codFisc").on("input", onSubmit);
-				$("#esito").text("Inserisci i dati richiesti; " + window.checkMaggiorenne);
+				$("#esito").text("Inserisci i dati richiesti; " + window.checkMaggiorenne + ":");
                  JFCustomWidget.subscribe("submit", onSubmit);
             };
             //always subscribe to ready event and implement widget related code
