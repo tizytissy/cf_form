@@ -22,7 +22,7 @@
 				msg = env.msg;
 				parms = env.parms;
 				reverseData = env.reverseData;
-				alert("parms:" + parms);
+				//alert("parms:" + parms);
                 // se il codice è valido, controllo che corrisponda a nome e cognome
 				if (msg.valid) {
 					if ((parms.lname) && (parms.fname)) {
@@ -36,7 +36,7 @@
 									if (dataNasc > parametri.adesso) {
 										var dataNasc = dataNasc.minus({years: 100})};
 									// se richiesto, verifico che il cf sia quello di un maggiorenne
-									alert("check1:" + msg.valid);
+									//alert("check1:" + msg.valid);
 									if (dataNasc > parametri.deadLine) {
 										env.esito = "È richiesto il codice fiscale di un maggiorenne.";
 										msg.valid = false;
@@ -79,7 +79,7 @@
 						env['esito'] = respReverse.message;
 						// $("#esito").text(respReverse.message);
 						env.msg.valid = respReverse.status;
-						alert("check0:" + msg.valid);
+						//alert("check0:" + msg.valid);
 					}
 				);
                 return env
@@ -89,7 +89,7 @@
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var ageReq = (JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes" ? 18: 0);
 				parametri['deadLine'] = parametri.adesso.minus({years: ageReq});
-				alert("atStartup:" + parametri.deadLine);
+				//alert("atStartup:" + parametri.deadLine);
                 function onSubmit() {
                     // send value to JotForm
                     checkCF().then(checkCF2).then(JFCustomWidget.sendSubmit, alert);
