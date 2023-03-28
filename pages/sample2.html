@@ -17,11 +17,11 @@
             <div id="esito"></div>
         </div>
         <script type="text/javascript">
-			var parametri = {adesso: luxon.DateTime.now()};
+			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing', checkMaggiorenne: '?'};
             async function checkCF2(msg, parms) {
                 // se il codice è valido, controllo che corrisponda a nome e cognome
                 if ((parms.cognome) && (parms.nome)) {
-                alert("compare:" + window.apiKey);
+                alert("compare:" + parametri + ";" + parms);
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
                         if (response.status == "false") {
@@ -42,7 +42,7 @@
                     value: cf.concat("|", nome, "|", cognome)
                 };
                 // per prima cosa, controllo la correttezza formale del codice fiscale
-                alert("reverse:" + parametri.apiKey);
+                alert("reverse:" + parametri);
                 await $.get("https://api.miocodicefiscale.com/reverse",
                       {    cf : cf, access_token :parametri.apiKey},
                 function (response) {
