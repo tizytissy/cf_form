@@ -24,6 +24,7 @@
                 alert("compare:" + parms.lname + "|---|" + parms.fname + "|");
                 await $.get("https://api.miocodicefiscale.com/compare", parms,
                     function (response) {
+						alert("compare:" + response.status + "|---|" + response.data.lname + "|---|" + response.data.fname + "|--|" + response.message);
                         if (response.status == "false") {
                             $("#esito").text(response.message);
                             msg.valid = false}})
