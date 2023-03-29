@@ -97,6 +97,7 @@
                 return env
             };
             async function atStartup(fromId, value) {
+				alert("atStartup:" + fromId + "|---|" + value + "<<<");
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var maxRequired = JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes";
