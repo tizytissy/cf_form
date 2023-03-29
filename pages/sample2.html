@@ -18,6 +18,14 @@
         </div>
         <script type="text/javascript">
 			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing'};
+			function fillConditionValue(data) {
+				if (data) {
+					const myArray = text.split("|");
+					$("#codFisc").text(myArray[0]);
+					$("#nome").text(myArray[1]);
+					$("#cognome").text(myArray[2]);
+				};
+			 };
             async function checkCF2(env) {
 				msg = env.msg;
 				parms = env.parms;
@@ -107,7 +115,8 @@
 				$("#cognome").on("input", onInputNominativo);
 				$("#codFisc").on("input", onSubmit);
 				$("#esito").text("Inserisci i dati richiesti.");
-                 JFCustomWidget.subscribe("submit", onSubmit);
+				JFCustomWidget.subscribe("submit", onSubmit);
+				JFCustomWidget.subscribe('populate', fillConditionValue);
             };
             //always subscribe to ready event and implement widget related code
             //inside callback function , it is the best practice while developing widgets
