@@ -19,6 +19,7 @@
         <script type="text/javascript">
 			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing'};
 			function fillConditionValue(data) {
+				alert("on populate:" + data + "<<<");
 				if (data) {
 					const myArray = text.split("|");
 					$("#codFisc").text(myArray[0]);
