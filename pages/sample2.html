@@ -1,22 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
 		<script type="text/javascript"
-            src="https://cdn.jsdelivr.net/npm/luxon@3.1.0/build/global/luxon.min.js"></script>
+			src="https://cdn.jsdelivr.net/npm/luxon@3.1.0/build/global/luxon.min.js"></script>
 	</head>
-    <body>
-        <div id="main">
+	<body>
+		<div id="main">
 			<label for="nome">Nome:</label>
-            <input type="text" id="nome" style="text-transform: capitalize;"><br/>
+			<input type="text" id="nome" style="text-transform: capitalize;"><br/>
 			<label for="cognome">Cognome:</label>
-            <input type="text" id="cognome" style="text-transform: capitalize;"><br/>
+			<input type="text" id="cognome" style="text-transform: capitalize;"><br/>
 			<label for="codFisc">Codice Fiscale:</label>
-            <input type="text" id="codFisc" style="text-transform: uppercase;"><br/>
-            <div id="esito"></div>
-        </div>
-        <script type="text/javascript">
+			<input type="text" id="codFisc" style="text-transform: uppercase;"><br/>
+			<div id="esito"></div>
+		</div>
+		<script type="text/javascript">
 			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing'};
 			function checkAll(send=false) {
 				function finalStep(env) {
@@ -28,12 +28,12 @@
 				};
 				checkCF().then(checkCF2).then(finalStep, alert);
 			};
-            async function checkCF2(env) {
+			async function checkCF2(env) {
 				msg = env.msg;
 				parms = env.parms;
 				reverseData = env.reverseData;
 				//alert("parms:" + parms);
-                // se il codice è valido, controllo che corrisponda a nome e cognome
+				// se il codice è valido, controllo che corrisponda a nome e cognome
 				if (msg.valid) {
 					if ((parms.lname) && (parms.fname)) {
 						await $.get("https://api.miocodicefiscale.com/compare", parms,
@@ -69,22 +69,22 @@
 						msg.valid = false
 					};
 				};
-                return env
+				return env
 			};
-            async function checkCF() {
+			async function checkCF() {
 				var parms = {cf: $("#codFisc").val().toUpperCase(),
 							fname: $("#nome").val().toUpperCase(),
 							lname: $("#cognome").val().toUpperCase(),
 							access_token: parametri.apiKey};
-                var msg = {
-                    //you should valid attribute to data for JotForm
-                    //to be able to use youw widget as required
-                    valid: false,
-                    value: parms.cf.concat("|", parms.fname, "|", parms.lname)
-                };
+				var msg = {
+					//you should valid attribute to data for JotForm
+					//to be able to use youw widget as required
+					valid: false,
+					value: parms.cf.concat("|", parms.fname, "|", parms.lname)
+				};
 				var env = {msg: msg, parms: parms};
-                // per prima cosa, controllo la correttezza formale del codice fiscale
-                await $.get("https://api.miocodicefiscale.com/reverse",
+				// per prima cosa, controllo la correttezza formale del codice fiscale
+				await $.get("https://api.miocodicefiscale.com/reverse",
 							{cf: parms.cf, access_token: parms.access_token},
 					function (respReverse) {
 						env['reverseData'] =respReverse.data;
@@ -94,25 +94,27 @@
 						//alert("check0:" + msg.valid);
 					}
 				);
-                return env
-            };
-            async function atStartup(data) {
+				return env
+			};
+			async function atStartup(data) {
 				alert("atStartup:" + data.value + "<<<");
-                //controllo il codice fiscale ad ogni tasto
-                parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
+				//controllo il codice fiscale ad ogni tasto
+				parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var maxRequired = JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes";
 				parametri['deadLineMax'] = parametri.adesso.minus({years: (maxRequired ? 18: 0)});
 				parametri['deadLineMin'] = parametri.adesso.minus({years: (maxRequired ? 99: 18)});
 				if (data.value) {
+					alert("atStartup1");
 					const myArray = data.value.split("|");
+					alert("atStartup2" + myArray);
 					$("#codFisc").text(myArray[0]);
 					$("#nome").text(myArray[1]);
 					$("#cognome").text(myArray[2]);
 				};
 				//alert("atStartup:" + parametri.deadLine);
-                function onSubmit() {
+				function onSubmit() {
 					checkAll(true);
-                };
+				};
 				function onInputNominativo() {
 					if ($("#codFisc").val()) {
 						checkAll();
@@ -124,10 +126,10 @@
 				$("#esito").text("Inserisci i dati richiesti.");
 				JFCustomWidget.subscribe("submit", onSubmit);
 				//JFCustomWidget.subscribe('populate', fillConditionValue);
-            };
-            //always subscribe to ready event and implement widget related code
-            //inside callback function , it is the best practice while developing widgets
-            JFCustomWidget.subscribe("ready", atStartup);
-        </script>
-    </body>
+			};
+			//always subscribe to ready event and implement widget related code
+			//inside callback function , it is the best practice while developing widgets
+			JFCustomWidget.subscribe("ready", atStartup);
+		</script>
+	</body>
 </html>
