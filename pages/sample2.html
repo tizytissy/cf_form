@@ -96,15 +96,15 @@
 				);
                 return env
             };
-            async function atStartup(fromId, value) {
-				alert("atStartup:" + JSON.stringify(fromId) + "|---|" + value + "<<<");
+            async function atStartup(data) {
+				alert("atStartup:" + data.value + "<<<");
                 //controllo il codice fiscale ad ogni tasto
                 parametri.apiKey = JFCustomWidget.getWidgetSetting('ApiKey');
 				var maxRequired = JFCustomWidget.getWidgetSetting('checkMaggiorenne') === "Yes";
 				parametri['deadLineMax'] = parametri.adesso.minus({years: (maxRequired ? 18: 0)});
 				parametri['deadLineMin'] = parametri.adesso.minus({years: (maxRequired ? 99: 18)});
-				if (value) {
-					const myArray = value.split("|");
+				if (data.value) {
+					const myArray = data.value.split("|");
 					$("#codFisc").text(myArray[0]);
 					$("#nome").text(myArray[1]);
 					$("#cognome").text(myArray[2]);
