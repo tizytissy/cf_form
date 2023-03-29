@@ -18,15 +18,16 @@
         </div>
         <script type="text/javascript">
 			var parametri = {adesso: luxon.DateTime.now(), apiKey: 'missing'};
-			function fillConditionValue(data) {
-				alert("on populate:" + data + "<<<");
-				if (data) {
-					const myArray = data.split("|");
-					$("#codFisc").text(myArray[0]);
-					$("#nome").text(myArray[1]);
-					$("#cognome").text(myArray[2]);
+			function checkAll(send=false) {
+				function finalStep(env) {
+					$("#esito").text(env.esito);
+					if (send) {
+						// send value to JotForm
+						JFCustomWidget.sendSubmit(env.msg)
+					};
 				};
-			 };
+				checkCF().then(checkCF2).then(finalStep, alert);
+			};
             async function checkCF2(env) {
 				msg = env.msg;
 				parms = env.parms;
@@ -68,8 +69,7 @@
 						msg.valid = false
 					};
 				};
-				$("#esito").text(env.esito);
-                return msg
+                return env
 			};
             async function checkCF() {
 				var parms = {cf: $("#codFisc").val().toUpperCase(),
@@ -111,17 +111,16 @@
 				};
 				//alert("atStartup:" + parametri.deadLine);
                 function onSubmit() {
-                    // send value to JotForm
-                    checkCF().then(checkCF2).then(JFCustomWidget.sendSubmit, alert);
+					checkAll(true);
                 };
 				function onInputNominativo() {
 					if ($("#codFisc").val()) {
-						onSubmit();
+						checkAll();
 					};
 				};
 				$("#nome").on("input", onInputNominativo);
 				$("#cognome").on("input", onInputNominativo);
-				$("#codFisc").on("input", onSubmit);
+				$("#codFisc").on("input", checkAll);
 				$("#esito").text("Inserisci i dati richiesti.");
 				JFCustomWidget.subscribe("submit", onSubmit);
 				//JFCustomWidget.subscribe('populate', fillConditionValue);
